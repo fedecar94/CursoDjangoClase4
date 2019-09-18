@@ -1,0 +1,52 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Titulo</title>
+    <link href="{% static 'vendor/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+<div class="card mx-auto mt-5" style="width: 24rem;">
+    <div class="card-body text-center">
+        {% if form.errors %}
+            <p class="text-danger">El usuario o la contraseña son incorrectos.</p>
+            <p class="text-danger">Por favor intente de nuevo.</p>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>No posee los permisos para acceder a la pagina.</p>
+                <p>Para continuar, por favor acceda con un usuario que si posee los permisos.</p>
+            {% else %}
+                <p>Por favor ingrese sus datos para ver la pagina solicitada.</p>
+            {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+            </table>
+
+            <input type="submit" class="btn btn-primary" value="Acceder"/>
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
+
+        <p><a href="{% url 'password_reset' %}">Olvido su contraseña?</a></p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="{% static 'vendor/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

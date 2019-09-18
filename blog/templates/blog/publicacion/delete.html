@@ -1,0 +1,16 @@
+{% extends 'adm.html' %}
+{% load markdown_extras %}
+
+{% block main %}
+<h1 class="pt-3">¿Seguro que desea borrar?</h1>
+<div class="card my-4">
+    <div class="card-body">
+        {{object.contenido|markdown|safe}}
+    </div>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Eliminar</button>
+    <a href="{% url 'publicacion_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock main %}

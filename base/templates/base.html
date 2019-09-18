@@ -1,0 +1,44 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Titulo</title>
+    <link href="{% static 'vendor/bootstrap-4.3.1-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Mi blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'publicacion_list' %}">Mis publicaciones</a>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+                <a class="btn btn-outline-light" href="{% url 'logout' %}">Salir</a>
+            {% else %}
+                <a class="btn btn-outline-light" href="{% url 'login' %}">Ingresar</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+    {% block body %}
+    {% endblock body %}
+</main>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="{% static 'vendor/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

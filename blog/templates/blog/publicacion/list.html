@@ -1,0 +1,29 @@
+{% extends 'adm.html' %}
+
+{% block main %}
+<a href="{% url 'publicacion_create' %}" class="btn btn-success float-right mt-4">Crear</a>
+<h1 class="pt-3">Publicaciones propias</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for publicacion in object_list %}
+    <tr>
+        <th>{{publicacion.id}}</th>
+        <td>{{publicacion.titulo}}</td>
+        <td>{{publicacion.fecha_publicacion}}</td>
+        <td>
+            <a href="{% url 'publicacion_update' publicacion.pk %}" class="btn btn-primary">Editar</a>
+            <a href="{% url 'publicacion_delete' publicacion.pk %}" class="btn btn-danger">Borrar</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock main %}

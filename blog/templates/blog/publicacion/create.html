@@ -1,0 +1,14 @@
+{% extends 'adm.html' %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+<h1 class="pt-3">{% if form.initial %}Actualizar{% else %}Crear{% endif %} publicación</h1>
+<form method="POST">
+    {% csrf_token %}
+    {% crispy form %}
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a href="../" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{{ form.media }}
+{% endblock main %}
