@@ -1,15 +1,36 @@
 {% extends 'public.html' %}
 
 {% block main %}
-<h1 class="pt-3">Publicaciones</h1>
+<h1 class="pt-3">{% if parametros %}Resultados para '{{parametros}}'{% else %}Publicaciones{% endif %}</h1>
 {% for publicacion in object_list %}
 <div class="card my-3">
     <div class="card-body">
         <h4 class="card-title">{{ publicacion.titulo }}</h4>
         <small class="card-subtitle mb-2 text-muted">{{publicacion.fecha_publicacion}}</small>
-        <a href="{% url 'public_detail' publicacion.pk %}" class="btn btn-primary float-right">Ver publicacion</a>
+        <a href="{% url 'public_detail' publicacion.pk publicacion.slug %}" class="btn btn-primary float-right">Ver publicacion</a>
         <p>Por {{publicacion.autor.get_full_name}}</p>
     </div>
 </div>
 {% endfor %}
+{% if is_paginated %}
+<div class="btn-group" role="group" aria-label="Paginator">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{% if parametros %}&parametros={{parametros}}{% endif %}" class="btn btn-light">&laquo;</a>
+    {% else %}
+      <a href="#" class="btn btn-light disabled">&laquo;</a>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <a href="#" class="btn btn-dark disabled">{{ i }} <span class="sr-only">(current)</span></a>
+      {% else %}
+        <a href="?page={{ i }}{% if parametros %}&parametros={{parametros}}{% endif %}" class="btn btn-light">{{ i }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% if parametros %}&parametros={{parametros}}{% endif %}" class="btn btn-light">&raquo;</a>
+    {% else %}
+      <a href="#" class="btn btn-light disabled">&raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
 {% endblock main %}

@@ -3,6 +3,19 @@ from django.utils.text import slugify
 from markdownx.models import MarkdownxField
 
 
+class Tag(models.Model):
+    publicacion = models.ForeignKey('blog.publicacion', on_delete=models.CASCADE, related_name='tags')
+    etiqueta = models.CharField('Etiqueta', max_length=32)
+
+    def __str__(self):
+        return '{} - {}'.format(self.publicacion, self.etiqueta)
+
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+        ordering = ['etiqueta', ]
+
+
 class Publicacion(models.Model):
     autor = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='publicaciones')
     titulo = models.CharField('Título', max_length=128)
